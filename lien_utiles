@@ -1,0 +1,35 @@
+#UFW
+https://guide.ubuntu-fr.org/server/firewall.html
+
+#MDP
+https://www.it-connect.fr/gestion-de-la-politique-des-mots-de-passe-sous-linux/
+https://www.it-connect.fr/linux-forcer-le-changement-de-mot-de-passe-des-comptes/
+https://computingforgeeks.com/enforce-strong-user-password-policy-ubuntu-debian/
+
+#SUDO
+https://www.osradar.com/how-to-enable-sudo-on-debian-10/
+https://doc.ubuntu-fr.org/sudoers
+https://www.sudo.ws/man/1.8.13/sudoers.man.html
+
+#CRON
+https://www.digitalocean.com/community/tutorials/how-to-use-cron-to-automate-tasks-ubuntu-1804-fr
+https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=video&cd=&ved=2ahUKEwjF7N-QnvvwAhUMahQKHYOrCKcQtwIwAHoECAcQAw&url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DllUw3RtD-Yw&usg=AOvVaw2lAG-3SJ7wKIBKf_NSzrMj
+
+#SSH
+YvesRougyFR sur yt explique bien ce que c'est donc regarde les 2 premieres video pour comprendre (le reste si vous voulez mais ca n'aide pas pour le sujet).
+
+#Bash
+https://doc.ubuntu-fr.org/tutoriel/script_shell
+https://openclassrooms.com/fr/courses/43538-reprenez-le-controle-a-laide-de-linux/43126-afficher-et-manipuler-des-variables
+Comment voir son systeme d'exploitation debian (par exemple)
+vous tapez la commande dans votre shell pour voir le resultat et apres vous mettez en forme avec
+grep
+awk
+sed
+cut
+Donc lisez le man
+
+#Utile (il faut d'abord installer les extentions necessaire)
+visudo /etc/sudoers
+vim /etc/ssh/sshd_config
+vim /etc/pam.d/common-password

@@ -1,0 +1,463 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1671\cocoasubrtf600
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fmodern\fcharset0 Courier;\f2\fnil\fcharset0 Monaco;
+\f3\fswiss\fcharset0 ArialMT;\f4\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red49\green49\blue49;\red245\green245\blue245;\red44\green44\blue44;
+\red242\green242\blue242;\red22\green21\blue22;\red246\green246\blue246;\red22\green21\blue22;\red14\green14\blue14;
+\red0\green0\blue0;\red251\green2\blue7;\red27\green31\blue34;\red255\green255\blue255;\red3\green45\blue153;
+}
+{\*\expandedcolortbl;;\cssrgb\c25098\c25098\c25098;\cssrgb\c96863\c96863\c96863;\cssrgb\c22745\c22745\c22745;
+\cssrgb\c96078\c96078\c96078;\cssrgb\c11373\c10980\c11373;\cssrgb\c97255\c97255\c97255;\cssrgb\c11373\c10980\c11373\c3922;\cssrgb\c6667\c6667\c6667;
+\cssrgb\c0\c0\c0\c7843;\cssrgb\c100000\c14913\c0;\cssrgb\c14118\c16078\c18039;\cssrgb\c100000\c100000\c100000;\cssrgb\c0\c25950\c66514;
+}
+\margl1440\margr1440\vieww15780\viewh19060\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 Born 2 Be Root\
+\
+Cl\'e9 de cryptage = root\
+Ilfaitbeaua42\
+IP = 127.0.0.1\
+Pour se mettre en root \'97> su root \
+Pour voir d autre endroit cd /. Puis tab\
+Sortir de Visudo : Ctrl 6 et x\
+\
+CREER LA VM\
+- Ouvrir Virtual Box. // DL ISO DEBIAN\
+- Mettre le nom // Mettre dans Goinfre // Mettre Linux + Debian\
+- Allouer 1GB pour non graphique 2GB pour graphique min\
+- Cr\'e9er disque dur virtuel\
+- VDI\
+- Dynamiquement allou\'e9 (plus facile mais moins rapide)\
+- Mettre 10GB (peut \'eatre plus en graphique)\
+\
+LANCEMENT (tuto avec bonus => https://www.youtube.com/watch?v=2w-2MX5QrQw&ab_channel=hanshazairi )\
+- D\'e9marrer dans Virtual Box\
+- Configurer la langue en FR\
+- Nom de la machine = nom utilisateur + 42\
+- Domaine = rien\
+- MP = 10 cara // majuscule //\
+- Partitionnement Manuel => SCSI2 => \
+\
+PREMIERE PARTITION pour mettre l  OS (boot)\
+pri/log=> Nouvelle partition => 500MB=>primaire=>Logique\
+- point de montage : /boot => fin du parametrage\
+\
+SECONDE PARTITION pour la partie crypt\'e9e\
+Pri/log=> max=>primaire=>Logique\
+- point de montage : aucun => fin du parametrage\
+Cryptage du sda5\
+\
+Root et home 2gb et le reste a 1gb\
+\
+Configurer sda5 \
+LVM => configurer les groupe pour le partitionnement\
+ \
+Configurer un LVM => utiliser comme syst\'e8me de fichier journalises ext4\
+Swap en espace \'e9change swap\
+\
+INSTALLER SUDO\
+https://milq.github.io/enable-sudo-user-account-debian/\
+\
+INSTALLER UFW\
+https://codedesign.fr/tutorial/firewall-facile-serveur-ufw/\
+OUVRIR LE PORT 4242\
+https://guide.ubuntu-fr.org/server/firewall.html\
+\
+INSTALLER VIM\
+Sudo apt install vim\
+\
+INSTALLER SSH
+\f1\fs32 \cf2 \cb3 \expnd0\expndtw0\kerning0
+\
+\pard\pardeftab720\sl360\partightenfactor0
+\cf2 sudo apt install openssh-server\
+https://phoenixnap.com/kb/how-to-enable-ssh-on-debian
+\f0\fs24 \cf0 \cb1 \kerning1\expnd0\expndtw0 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 \
+SERVICE SSH port 4242 =  OK\
+\
+INTERDIRE UTILISATEUR ROOT :\
+https://www.it-connect.fr/interdire-les-connexions-ssh-de-lutilisateur-root/\
+\
+MESSAGE ERREUR MDP\
+https://doc.ubuntu-fr.org/sudoers\
+\
+CREER UN GROUPE user42 et ce mettre dessus : OK\
+\
+Custom le sudoers et mettre les log dans un doc = OK\
+https://www.tecmint.com/sudoers-configurations-for-setting-sudo-in-linux/\
+Rajouter le tty => OK\
+Custom message d erreur MP sudo => OK\
+\
+SSH ok pour la connexion\
+Ok pour connexion sans le root\
+\
+A FAIRE :\
+MOT DE PASSE FORT :\
+Installer pam et pam pwquality\
+https://computingforgeeks.com/enforce-strong-user-password-policy-ubuntu-debian/\
+Expiration tous les 30 jours : OK. Chage -M 30 user\
+https://ostechnix.com/how-to-set-password-policies-in-linux/\
+Configurer ici :\
+\pard\pardeftab720\sl540\partightenfactor0
+
+\f1\fs32 \cf4 \cb5 \expnd0\expndtw0\kerning0
+/etc/login.defs
+\f0\fs24 \cf0 \cb1 \kerning1\expnd0\expndtw0 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 Jour min avant la modification = OK chage -m 2 user\
+10 cara min + maj + chiffre + 3 Cara cons\'e9cutif + pas nom utilisateur = OK\
+\
+\pard\pardeftab720\sl340\partightenfactor0
+
+\fs30 \cf6 \cb7 \expnd0\expndtw0\kerning0
+To setup default password expiry for all new users in Linux\cb1 \
+\cb7 Open file /etc/login.defs using text editor and set the following values as per your requirements.\cb1 \
+\pard\pardeftab720\sl360\partightenfactor0
+
+\f2\fs24 \cf6 \cb8 PASS_MAX_DAYS 90\cb1 \
+\cb8 PASS_MIN_DAYS 1\cb1 \
+\cb8 PASS_WARN_AGE 7
+\f0 \cf0 \cb1 \kerning1\expnd0\expndtw0 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f3 \cf9 \expnd0\expndtw0\kerning0
+Linux change password for other user account\
+You need to login as the root user, type the following command to change password for user vivek:\
+
+\f4 \cb10 # passwd vivek\
+
+\f3 \cb1 OR\
+
+\f4 \cb10 $ sudo passwd vivek
+\fs32 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 \cb1 \kerning1\expnd0\expndtw0 \
+CRONTAB :\
+https://www.digitalocean.com/community/tutorials/how-to-use-cron-to-automate-tasks-ubuntu-1804-fr\
+https://crontab.guru/\
+\
+Faire un nouveau crontab \'97> crontab -e\
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf11 Monitoring.sh\
+\
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trcbpat13 \trbrdrt\brdrnil \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clwWidth1000\clftsWidth3 \clminw1000 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx4320
+\clvertalt \clshdrawnil \clwWidth13404\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\sl400\qr\partightenfactor0
+
+\f4 \cf12 \expnd0\expndtw0\kerning0
+\cell 
+\pard\intbl\itap1\pardeftab720\sl400\partightenfactor0
+\cf12 #!/bin/bash\cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trcbpat13 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clwWidth13404\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx4320
+\clvertalt \clshdrawnil \clwWidth13404\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx8640
+\pard\intbl\itap1\partightenfactor0
+\cf12 \cell 
+\pard\intbl\itap1\pardeftab720\sl400\partightenfactor0
+\cf12 \
+\cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trcbpat13 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clwWidth1000\clftsWidth3 \clminw1000 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx4320
+\clvertalt \clshdrawnil \clwWidth13404\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\sl400\qr\partightenfactor0
+\cf12 \cell 
+\pard\intbl\itap1\pardeftab720\sl400\partightenfactor0
+\cf12 USERNAME=$(whoami)\cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trcbpat13 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clwWidth1000\clftsWidth3 \clminw1000 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx4320
+\clvertalt \clshdrawnil \clwWidth13404\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\sl400\qr\partightenfactor0
+\cf12 \cell 
+\pard\intbl\itap1\pardeftab720\sl400\partightenfactor0
+\cf12 HOSTNAME=$(hostname)\cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trcbpat13 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clwWidth1000\clftsWidth3 \clminw1000 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx4320
+\clvertalt \clshdrawnil \clwWidth13404\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\sl400\qr\partightenfactor0
+\cf12 \cell 
+\pard\intbl\itap1\pardeftab720\sl400\partightenfactor0
+\cf12 DATE=$(date +"%a %b %d %T %Y")\cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trcbpat13 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clwWidth1000\clftsWidth3 \clminw1000 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx4320
+\clvertalt \clshdrawnil \clwWidth13404\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\sl400\qr\partightenfactor0
+\cf12 \cell 
+\pard\intbl\itap1\pardeftab720\sl400\partightenfactor0
+\cf12 ARCHITECTURE=$(uname -a)\cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trcbpat13 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clwWidth1000\clftsWidth3 \clminw1000 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx4320
+\clvertalt \clshdrawnil \clwWidth13404\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\sl400\qr\partightenfactor0
+\cf12 \cell 
+\pard\intbl\itap1\pardeftab720\sl400\partightenfactor0
+\cf12 CPU_PHYSICAL=$(nproc)\cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trcbpat13 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clwWidth1000\clftsWidth3 \clminw1000 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx4320
+\clvertalt \clshdrawnil \clwWidth13404\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\sl400\qr\partightenfactor0
+\cf12 \cell 
+\pard\intbl\itap1\pardeftab720\sl400\partightenfactor0
+\cf12 V_CPU=$(cat /proc/cpuinfo | grep processor | wc -l).   # on va chercher les infos sur le cpu puis on imprime le nombre de ligne pour prouver qu il y en a une\cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trcbpat13 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clwWidth1000\clftsWidth3 \clminw1000 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx4320
+\clvertalt \clshdrawnil \clwWidth13404\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\sl400\qr\partightenfactor0
+\cf12 \cell 
+\pard\intbl\itap1\pardeftab720\sl400\partightenfactor0
+\cf12 MEM=$(free -m | grep "Mem:" | awk '\{printf("%d/%dMB (%.2f%%)", $3, $2, ($3 * 100 / $2))\}') #awk permet d imprimer les colonnes)\cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trcbpat13 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clwWidth1000\clftsWidth3 \clminw1000 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx4320
+\clvertalt \clshdrawnil \clwWidth13404\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\sl400\qr\partightenfactor0
+\cf12 \cell 
+\pard\intbl\itap1\pardeftab720\sl400\partightenfactor0
+\cf12 DISK=$(df -h --total | grep "total" | awk '\{printf("%.1f/%.1fGB (%.2d%%)", $3, $2, $4)\}')\cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trcbpat13 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clwWidth1000\clftsWidth3 \clminw1000 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx4320
+\clvertalt \clshdrawnil \clwWidth13404\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\sl400\qr\partightenfactor0
+\cf12 \cell 
+\pard\intbl\itap1\pardeftab720\sl400\partightenfactor0
+\cf12 CPU_LOAD=$(uptime | awk '\{print($9)\}' | tr ',' \'91.\'92 | rev | cut -c2- | sed \'92s/^/ %/\'91 | rev)\cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trcbpat13 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clwWidth1000\clftsWidth3 \clminw1000 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx4320
+\clvertalt \clshdrawnil \clwWidth13404\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\sl400\qr\partightenfactor0
+\cf12 \cell 
+\pard\intbl\itap1\pardeftab720\sl400\partightenfactor0
+\cf12 LAST_BOOT=$(uptime --since | rev | cut -c4- | rev)\cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trcbpat13 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clwWidth1000\clftsWidth3 \clminw1000 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx4320
+\clvertalt \clshdrawnil \clwWidth13404\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\sl400\qr\partightenfactor0
+\cf12 \cell 
+\pard\intbl\itap1\pardeftab720\sl400\partightenfactor0
+\cf12 LVM_USE="no"\cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trcbpat13 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clwWidth1000\clftsWidth3 \clminw1000 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx4320
+\clvertalt \clshdrawnil \clwWidth13404\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\sl400\qr\partightenfactor0
+\cf12 \cell 
+\pard\intbl\itap1\pardeftab720\sl400\partightenfactor0
+\cf12 if [ $(cat /etc/fstab | grep -c "/dev/mapper/") ] # ici on check s\'92il existe bien les lignes dev qui indique qu on a du LVM\cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trcbpat13 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clwWidth1000\clftsWidth3 \clminw1000 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx4320
+\clvertalt \clshdrawnil \clwWidth13404\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\sl400\qr\partightenfactor0
+\cf12 \cell 
+\pard\intbl\itap1\pardeftab720\sl400\partightenfactor0
+\cf12 then\cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trcbpat13 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clwWidth1000\clftsWidth3 \clminw1000 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx4320
+\clvertalt \clshdrawnil \clwWidth13404\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\sl400\qr\partightenfactor0
+\cf12 \cell 
+\pard\intbl\itap1\pardeftab720\sl400\partightenfactor0
+\cf12 	LVM_USE="yes"\cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trcbpat13 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clwWidth1000\clftsWidth3 \clminw1000 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx4320
+\clvertalt \clshdrawnil \clwWidth13404\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\sl400\qr\partightenfactor0
+\cf12 \cell 
+\pard\intbl\itap1\pardeftab720\sl400\partightenfactor0
+\cf12 fi\cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trcbpat13 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clwWidth1000\clftsWidth3 \clminw1000 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx4320
+\clvertalt \clshdrawnil \clwWidth13404\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\sl400\qr\partightenfactor0
+\cf12 \cell 
+\pard\intbl\itap1\pardeftab720\sl400\partightenfactor0
+\cf12 TCP_CON=$(ss -t | grep -c "ESTAB")\cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trcbpat13 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clwWidth1000\clftsWidth3 \clminw1000 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx4320
+\clvertalt \clshdrawnil \clwWidth13404\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\sl400\qr\partightenfactor0
+\cf12 \cell 
+\pard\intbl\itap1\pardeftab720\sl400\partightenfactor0
+\cf12 USR_LOG=$(who | wc -l)\cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trcbpat13 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clwWidth1000\clftsWidth3 \clminw1000 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx4320
+\clvertalt \clshdrawnil \clwWidth13404\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\sl400\qr\partightenfactor0
+\cf12 \cell 
+\pard\intbl\itap1\pardeftab720\sl400\partightenfactor0
+\cf12 NET_IP=$(hostname -I | tr -d '\\n')\cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trcbpat13 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clwWidth1000\clftsWidth3 \clminw1000 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx4320
+\clvertalt \clshdrawnil \clwWidth13404\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\sl400\qr\partightenfactor0
+\cf12 \cell 
+\pard\intbl\itap1\pardeftab720\sl400\partightenfactor0
+\cf12 NET_MAC=$(ip a | grep "link/ether" | awk '\{printf("%s", $2)\}')\cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trcbpat13 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clwWidth1000\clftsWidth3 \clminw1000 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx4320
+\clvertalt \clshdrawnil \clwWidth13404\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\sl400\qr\partightenfactor0
+\cf12 \cell 
+\pard\intbl\itap1\pardeftab720\sl400\partightenfactor0
+\cf12 SUDO=$(cat /var/log/sudo/sudo.log | grep -c COMMAND)\cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trcbpat13 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clwWidth13404\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx4320
+\clvertalt \clshdrawnil \clwWidth13404\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx8640
+\pard\intbl\itap1\partightenfactor0
+\cf12 \cell 
+\pard\intbl\itap1\pardeftab720\sl400\partightenfactor0
+\cf12 \
+\cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trcbpat13 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clwWidth1000\clftsWidth3 \clminw1000 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx4320
+\clvertalt \clshdrawnil \clwWidth13404\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\sl400\qr\partightenfactor0
+\cf12 \cell 
+\pard\intbl\itap1\pardeftab720\sl400\partightenfactor0
+\cf12 echo "Broadcast message from $USERNAME@$HOSTNAME (tty1) ($DATE):"\cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trcbpat13 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clwWidth1000\clftsWidth3 \clminw1000 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx4320
+\clvertalt \clshdrawnil \clwWidth13404\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\sl400\qr\partightenfactor0
+\cf12 \cell 
+\pard\intbl\itap1\pardeftab720\sl400\partightenfactor0
+\cf12 echo ""\cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trcbpat13 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clwWidth1000\clftsWidth3 \clminw1000 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx4320
+\clvertalt \clshdrawnil \clwWidth13404\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\sl400\qr\partightenfactor0
+\cf12 \cell 
+\pard\intbl\itap1\pardeftab720\sl400\partightenfactor0
+\cf12 echo "	#Architecture: $ARCHITECTURE"\cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trcbpat13 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clwWidth1000\clftsWidth3 \clminw1000 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx4320
+\clvertalt \clshdrawnil \clwWidth13404\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\sl400\qr\partightenfactor0
+\cf12 \cell 
+\pard\intbl\itap1\pardeftab720\sl400\partightenfactor0
+\cf12 echo "	#CPU physical: $CPU_PHYSICAL"\cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trcbpat13 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clwWidth1000\clftsWidth3 \clminw1000 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx4320
+\clvertalt \clshdrawnil \clwWidth13404\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\sl400\qr\partightenfactor0
+\cf12 \cell 
+\pard\intbl\itap1\pardeftab720\sl400\partightenfactor0
+\cf12 echo "	#vCPU: $V_CPU"\cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trcbpat13 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clwWidth1000\clftsWidth3 \clminw1000 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx4320
+\clvertalt \clshdrawnil \clwWidth13404\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\sl400\qr\partightenfactor0
+\cf12 \cell 
+\pard\intbl\itap1\pardeftab720\sl400\partightenfactor0
+\cf12 echo "	#Memory Usage: $MEM"\cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trcbpat13 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clwWidth1000\clftsWidth3 \clminw1000 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx4320
+\clvertalt \clshdrawnil \clwWidth13404\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\sl400\qr\partightenfactor0
+\cf12 \cell 
+\pard\intbl\itap1\pardeftab720\sl400\partightenfactor0
+\cf12 echo "	#Disk Usage: $DISK"\cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trcbpat13 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clwWidth1000\clftsWidth3 \clminw1000 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx4320
+\clvertalt \clshdrawnil \clwWidth13404\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\sl400\qr\partightenfactor0
+\cf12 \cell 
+\pard\intbl\itap1\pardeftab720\sl400\partightenfactor0
+\cf12 echo "	#CPU Load: $CPU_LOAD"\cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trcbpat13 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clwWidth1000\clftsWidth3 \clminw1000 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx4320
+\clvertalt \clshdrawnil \clwWidth13404\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\sl400\qr\partightenfactor0
+\cf12 \cell 
+\pard\intbl\itap1\pardeftab720\sl400\partightenfactor0
+\cf12 echo "	#Last boot: $LAST_BOOT"\cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trcbpat13 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clwWidth1000\clftsWidth3 \clminw1000 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx4320
+\clvertalt \clshdrawnil \clwWidth13404\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\sl400\qr\partightenfactor0
+\cf12 \cell 
+\pard\intbl\itap1\pardeftab720\sl400\partightenfactor0
+\cf12 echo "	#LVM use: $LVM_USE"\cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trcbpat13 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clwWidth1000\clftsWidth3 \clminw1000 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx4320
+\clvertalt \clshdrawnil \clwWidth13404\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\sl400\qr\partightenfactor0
+\cf12 \cell 
+\pard\intbl\itap1\pardeftab720\sl400\partightenfactor0
+\cf12 echo "	#Connexions TCP: $TCP_CON ESTABLISHED"\cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trcbpat13 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clwWidth1000\clftsWidth3 \clminw1000 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx4320
+\clvertalt \clshdrawnil \clwWidth13404\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\sl400\qr\partightenfactor0
+\cf12 \cell 
+\pard\intbl\itap1\pardeftab720\sl400\partightenfactor0
+\cf12 echo "	#User log: $USR_LOG"\cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trcbpat13 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clwWidth1000\clftsWidth3 \clminw1000 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx4320
+\clvertalt \clshdrawnil \clwWidth13404\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\sl400\qr\partightenfactor0
+\cf12 \cell 
+\pard\intbl\itap1\pardeftab720\sl400\partightenfactor0
+\cf12 echo "	#Network: IP $NET_IP ($NET_MAC)"\cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trcbpat13 \trbrdrl\brdrnil \trbrdrt\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clwWidth1000\clftsWidth3 \clminw1000 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx4320
+\clvertalt \clshdrawnil \clwWidth13404\clftsWidth3 \clbrdrt\brdrnil \clbrdrl\brdrnil \clbrdrb\brdrnil \clbrdrr\brdrnil \clpadl200 \clpadr200 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\sl400\qr\partightenfactor0
+\cf12 \cell 
+\pard\intbl\itap1\pardeftab720\sl400\partightenfactor0
+\cf12 echo "	#Sudo: $SUDO cmd"\cell \lastrow\row
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0 \cf14 \kerning1\expnd0\expndtw0 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 \
+\
+\
+\
+\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\
+service \'97status-all\
+\
+}
